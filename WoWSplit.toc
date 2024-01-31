@@ -1,0 +1,13 @@
+
+## Interface: 100105
+
+## Title: WoW|cFFF5DEB3Split
+## Notes: |cFFF5DEB3A load-removing timer.
+## IconTexture: Interface\Addons\WoWSplit\Assets\Icon
+
+## Author: Odjur
+## Version: 1.0
+
+## SavedVariables: WoWSplit_SavedVariable
+
+WoWSplit.lua
