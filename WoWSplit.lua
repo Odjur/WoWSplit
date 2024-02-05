@@ -229,7 +229,7 @@ local function CreateLayout()
 		layout[b].fontColor = "#E6E6E6FF"
 	end
 	
-	layout.settings.enabled = nil
+	layout.settings.enabled = false
 	
 	layout.controls.width = 20
 	layout.settings.width = 300
@@ -321,7 +321,7 @@ end
 local function TemplateFrame(frame, parent, layout, class, isContainer)
 	layout = activeLayout[layout]
 	frame = frame or CreateFrame(class or "Frame", nil, parent, "BackdropTemplate")
-	frame:SetShown(layout.enabled or true)
+	frame:SetShown(layout.enabled)
 	
 	if not isContainer then
 		frame:SetBackdrop({
@@ -739,7 +739,8 @@ local function LoadFrames()
 	
 	WS:SetScript("OnMouseDown", function(self, button)
 		if button ~= "RightButton" then return end
-		self.settings:SetShown(not self.settings:IsVisible())
+		activeLayout.settings.enabled = not activeLayout.settings.enabled
+		LoadFrames()
 	end)
 	
 	WS.settings.scroll = TemplateFrame(WS.settings.scroll, WS.settings, "settings")
@@ -976,7 +977,7 @@ WS:SetScript("OnEvent", function(self)
 	
 	-- Detect loading
 	self:SetScript("OnEvent", function(_, event)
-		if event == "FIRST_FRAME_RENDERED" then
+		if event == "LOADING_SCREEN_DISABLED" then
 			if not state.loading then return end
 			WoWSplit:Start()
 			state.loading = false
@@ -997,8 +998,8 @@ WS:SetScript("OnEvent", function(self)
 		end
 	end)
 	
-	self:RegisterEvent("FIRST_FRAME_RENDERED")
-	self:RegisterEvent("PLAYER_LEAVING_WORLD")
+	self:RegisterEvent("LOADING_SCREEN_ENABLED")
+	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:RegisterEvent("PLAYER_LOGOUT")
 	
 	local method
