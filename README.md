@@ -6,6 +6,8 @@ Use ```/wowsplit``` or ```/ws``` to show or hide the addon.
 
 Right-click the timer to show or hide the settings menu.
 
+Left-click on text labels in the addon to rename them.
+
 Add:
 
 > /run WoWSplit:Start()
